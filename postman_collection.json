@@ -1,0 +1,152 @@
+{
+  "info": {
+    "name": "Products Multi-Tenancy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "b8c4c8a8-1234-5678-9012-abcdefabcdef"
+  },
+  "item": [
+    {
+      "name": "Companies",
+      "item": [
+        { "name": "List companies", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/companies" } },
+        { "name": "Get company by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/companies/1" } },
+        { "name": "Create company", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme Inc\",\n  \"subdomain\": \"acme\",\n  \"subscriptionStatus\": \"ACTIVE\"\n}" }, "url": "{{baseUrl}}/api/v1/companies" } },
+        { "name": "Update company", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme Corp\",\n  \"subdomain\": \"acme\",\n  \"subscriptionStatus\": \"TRIAL\"\n}" }, "url": "{{baseUrl}}/api/v1/companies/1" } },
+        { "name": "Delete company", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/companies/1" } }
+      ]
+    },
+    {
+      "name": "Stores",
+      "item": [
+        { "name": "List stores", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stores" } },
+        { "name": "Get store by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stores/1" } },
+        { "name": "Create store", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"company\": { \"id\": 1 },\n  \"name\": \"Store NYC\",\n  \"country\": \"US\",\n  \"timeZone\": \"America/New_York\",\n  \"localCurrency\": \"USD\",\n  \"localTaxes\": 8.875,\n  \"address\": \"123 Broadway\"\n}" }, "url": "{{baseUrl}}/api/v1/stores" } },
+        { "name": "Update store", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"company\": { \"id\": 1 },\n  \"name\": \"Store Brooklyn\"\n}" }, "url": "{{baseUrl}}/api/v1/stores/1" } },
+        { "name": "Delete store", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/stores/1" } }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        { "name": "List users", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/users" } },
+        { "name": "Get user by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/users/1" } },
+        { "name": "Create user", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@acme.com\",\n  \"passwordHash\": \"***\",\n  \"authMethod\": \"password\",\n  \"name\": \"John Doe\",\n  \"company\": { \"id\": 1 }\n}" }, "url": "{{baseUrl}}/api/v1/users" } },
+        { "name": "Update user", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jane Doe\"\n}" }, "url": "{{baseUrl}}/api/v1/users/1" } },
+        { "name": "Delete user", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/users/1" } }
+      ]
+    },
+    {
+      "name": "User Store Roles",
+      "item": [
+        { "name": "List roles", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/user-store-roles" } },
+        { "name": "Get role by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/user-store-roles/1" } },
+        { "name": "Create role", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"user\": { \"id\": 1 },\n  \"store\": { \"id\": 1 },\n  \"role\": \"ADMINISTRATOR\",\n  \"isPrimaryRole\": true\n}" }, "url": "{{baseUrl}}/api/v1/user-store-roles" } },
+        { "name": "Update role", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"role\": \"EMPLOYEE\"\n}" }, "url": "{{baseUrl}}/api/v1/user-store-roles/1" } },
+        { "name": "Delete role", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/user-store-roles/1" } }
+      ]
+    },
+    {
+      "name": "Brands",
+      "item": [
+        { "name": "List brands", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/brands" } },
+        { "name": "Get brand by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/brands/1" } },
+        { "name": "Create brand", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Nike\"\n}" }, "url": "{{baseUrl}}/api/v1/brands" } },
+        { "name": "Update brand", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Adidas\"\n}" }, "url": "{{baseUrl}}/api/v1/brands/1" } },
+        { "name": "Delete brand", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/brands/1" } }
+      ]
+    },
+    {
+      "name": "Product Models",
+      "item": [
+        { "name": "List product models", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/product-models" } },
+        { "name": "Get product model by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/product-models/1" } },
+        { "name": "Create product model", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"brand\": { \"id\": 1 },\n  \"name\": \"Air Max\",\n  \"footwearType\": \"Sneakers\",\n  \"mainMaterial\": \"Leather\",\n  \"gender\": \"Unisex\"\n}" }, "url": "{{baseUrl}}/api/v1/product-models" } },
+        { "name": "Update product model", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Air Zoom\"\n}" }, "url": "{{baseUrl}}/api/v1/product-models/1" } },
+        { "name": "Delete product model", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/product-models/1" } }
+      ]
+    },
+    {
+      "name": "Product Variants",
+      "item": [
+        { "name": "List product variants", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/product-variants" } },
+        { "name": "Get product variant by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/product-variants/1" } },
+        { "name": "Create product variant", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"productModel\": { \"id\": 1 },\n  \"sizeUs\": \"10\",\n  \"primaryColor\": \"Black\",\n  \"sku\": \"SKU-123\",\n  \"barcode\": \"BAR-123\",\n  \"purchasePrice\": 100.0\n}" }, "url": "{{baseUrl}}/api/v1/product-variants" } },
+        { "name": "Update product variant", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"sizeUs\": \"11\"\n}" }, "url": "{{baseUrl}}/api/v1/product-variants/1" } },
+        { "name": "Delete product variant", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/product-variants/1" } }
+      ]
+    },
+    {
+      "name": "Inventory Stocks",
+      "item": [
+        { "name": "List inventory stocks", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/inventory-stocks" } },
+        { "name": "Get inventory stock by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/inventory-stocks/1" } },
+        { "name": "Create inventory stock", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"store\": { \"id\": 1 },\n  \"productVariant\": { \"id\": 1 },\n  \"quantity\": 5,\n  \"minStockAlert\": 2\n}" }, "url": "{{baseUrl}}/api/v1/inventory-stocks" } },
+        { "name": "Update inventory stock", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"quantity\": 8\n}" }, "url": "{{baseUrl}}/api/v1/inventory-stocks/1" } },
+        { "name": "Delete inventory stock", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/inventory-stocks/1" } }
+      ]
+    },
+    {
+      "name": "Store Selling Prices",
+      "item": [
+        { "name": "List store selling prices", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/store-selling-prices" } },
+        { "name": "Get store selling price by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/store-selling-prices/1" } },
+        { "name": "Create store selling price", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"store\": { \"id\": 1 },\n  \"productVariant\": { \"id\": 1 },\n  \"sellingPrice\": 129.99\n}" }, "url": "{{baseUrl}}/api/v1/store-selling-prices" } },
+        { "name": "Update store selling price", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"sellingPrice\": 139.99\n}" }, "url": "{{baseUrl}}/api/v1/store-selling-prices/1" } },
+        { "name": "Delete store selling price", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/store-selling-prices/1" } }
+      ]
+    },
+    {
+      "name": "Stock Transactions",
+      "item": [
+        { "name": "List stock transactions", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stock-transactions" } },
+        { "name": "Get stock transaction by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stock-transactions/1" } },
+        { "name": "Create stock transaction", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"store\": { \"id\": 1 },\n  \"productVariant\": { \"id\": 1 },\n  \"type\": \"SALE\",\n  \"changeQuantity\": -1\n}" }, "url": "{{baseUrl}}/api/v1/stock-transactions" } },
+        { "name": "Update stock transaction", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"changeQuantity\": -2\n}" }, "url": "{{baseUrl}}/api/v1/stock-transactions/1" } },
+        { "name": "Delete stock transaction", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/stock-transactions/1" } }
+      ]
+    },
+    {
+      "name": "Transfers",
+      "item": [
+        { "name": "List transfers", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/transfers" } },
+        { "name": "Get transfer by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/transfers/1" } },
+        { "name": "Create transfer", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"company\": { \"id\": 1 },\n  \"originStore\": { \"id\": 1 },\n  \"destinationStore\": { \"id\": 2 },\n  \"status\": \"CREATED\"\n}" }, "url": "{{baseUrl}}/api/v1/transfers" } },
+        { "name": "Update transfer", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"status\": \"COMPLETED\"\n}" }, "url": "{{baseUrl}}/api/v1/transfers/1" } },
+        { "name": "Delete transfer", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/transfers/1" } }
+      ]
+    },
+    {
+      "name": "Transfer Details",
+      "item": [
+        { "name": "List transfer details", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/transfer-details" } },
+        { "name": "Get transfer detail by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/transfer-details/1" } },
+        { "name": "Create transfer detail", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"transfer\": { \"id\": 1 },\n  \"productVariant\": { \"id\": 1 },\n  \"requestedQuantity\": 10\n}" }, "url": "{{baseUrl}}/api/v1/transfer-details" } },
+        { "name": "Update transfer detail", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"sentQuantity\": 8,\n  \"receivedQuantity\": 8\n}" }, "url": "{{baseUrl}}/api/v1/transfer-details/1" } },
+        { "name": "Delete transfer detail", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/transfer-details/1" } }
+      ]
+    },
+    {
+      "name": "Subscription Plans",
+      "item": [
+        { "name": "List subscription plans", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/subscription-plans" } },
+        { "name": "Get subscription plan by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/subscription-plans/1" } },
+        { "name": "Create subscription plan", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Pro\",\n  \"monthlyPrice\": 49.99,\n  \"storeLimit\": 5,\n  \"userLimit\": 20,\n  \"features\": \"All features\"\n}" }, "url": "{{baseUrl}}/api/v1/subscription-plans" } },
+        { "name": "Update subscription plan", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Enterprise\"\n}" }, "url": "{{baseUrl}}/api/v1/subscription-plans/1" } },
+        { "name": "Delete subscription plan", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/subscription-plans/1" } }
+      ]
+    },
+    {
+      "name": "Subscription Payments",
+      "item": [
+        { "name": "List subscription payments", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/subscription-payments" } },
+        { "name": "Get subscription payment by id", "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/subscription-payments/1" } },
+        { "name": "Create subscription payment", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"company\": { \"id\": 1 },\n  \"plan\": { \"id\": 1 },\n  \"startDate\": \"2024-01-01T00:00:00Z\",\n  \"endDate\": \"2024-02-01T00:00:00Z\",\n  \"amount\": 49.99,\n  \"paymentStatus\": \"PAID\",\n  \"paymentReference\": \"INV-001\"\n}" }, "url": "{{baseUrl}}/api/v1/subscription-payments" } },
+        { "name": "Update subscription payment", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": { "mode": "raw", "raw": "{\n  \"paymentStatus\": \"REFUNDED\"\n}" }, "url": "{{baseUrl}}/api/v1/subscription-payments/1" } },
+        { "name": "Delete subscription payment", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/subscription-payments/1" } }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ]
+}

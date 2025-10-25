@@ -1,0 +1,173 @@
+// Schema Definition for Multi-tenancy
+
+Enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  TRIAL
+}
+
+Table Company {
+  id bigserial [pk]
+  name varchar
+  subdomain varchar [unique]
+  subscription_status SubscriptionStatus
+  creation_date timestamp
+}
+
+Table Store {
+  id bigserial [pk]
+  company_id bigint [ref: > Company.id]
+  name varchar
+  country varchar
+  time_zone varchar
+  local_currency varchar
+  local_taxes float
+  address text
+}
+
+// User and Authorization Entities
+
+Enum CompanyRole {
+  ADMINISTRATOR
+  STORE_MANAGER
+  EMPLOYEE
+}
+
+Table User {
+  id bigserial [pk]
+  email varchar [unique]
+  password_hash varchar
+  auth_method varchar
+  name varchar
+  company_id bigint [ref: > Company.id]
+}
+
+Table UserStoreRole {
+  id bigserial [pk]
+  user_id bigint [ref: > User.id]
+  store_id bigint [ref: > Store.id]
+  role CompanyRole
+  is_primary_role boolean
+  
+  indexes {
+    (user_id, store_id) [unique]
+  }
+}
+
+// Product and Catalog Entities
+
+Table Brand {
+  id bigserial [pk]
+  name varchar [unique]
+}
+
+Table ProductModel {
+  id bigserial [pk]
+  brand_id bigint [ref: > Brand.id]
+  name varchar
+  footwear_type varchar
+  main_material varchar
+  gender varchar
+}
+
+Table ProductVariant {
+  id bigserial [pk]
+  product_model_id bigint [ref: > ProductModel.id]
+  size_us varchar
+  size_eu varchar
+  size_uk varchar
+  primary_color varchar
+  secondary_color varchar
+  sku varchar [unique]
+  barcode varchar [unique]
+  purchase_price decimal
+}
+
+// Central Inventory Entity (Decentralized by Store)
+
+Table InventoryStock {
+  id bigserial [pk]
+  store_id bigint [ref: > Store.id]
+  product_variant_id bigint [ref: > ProductVariant.id]
+  quantity integer
+  min_stock_alert integer
+  last_update_date timestamp
+  
+  indexes {
+    (store_id, product_variant_id) [unique]
+  }
+}
+
+Table StoreSellingPrice {
+  id bigserial [pk]
+  store_id bigint [ref: > Store.id]
+  product_variant_id bigint [ref: > ProductVariant.id]
+  selling_price decimal
+  
+  indexes {
+    (store_id, product_variant_id) [unique]
+  }
+}
+
+// Transactions and Workflow Entities
+
+Enum TransactionType {
+  SALE
+  RECEIPT
+  ADJUSTMENT
+  TRANSFER_IN
+  TRANSFER_OUT
+  RETURN
+}
+
+Table StockTransaction {
+  id bigserial [pk]
+  store_id bigint [ref: > Store.id]
+  product_variant_id bigint [ref: > ProductVariant.id]
+  type TransactionType
+  change_quantity integer
+  user_id bigint [ref: > User.id]
+  transaction_date timestamp
+  external_reference varchar
+}
+
+Table Transfer {
+  id bigserial [pk]
+  company_id bigint [ref: > Company.id]
+  origin_store_id bigint [ref: > Store.id]
+  destination_store_id bigint [ref: > Store.id]
+  status varchar
+  creation_date timestamp
+  completion_date timestamp
+}
+
+Table TransferDetail {
+  id bigserial [pk]
+  transfer_id bigint [ref: > Transfer.id]
+  product_variant_id bigint [ref: > ProductVariant.id]
+  requested_quantity integer
+  sent_quantity integer
+  received_quantity integer
+}
+
+// Monetization Entities
+
+Table SubscriptionPlan {
+  id bigserial [pk]
+  name varchar
+  monthly_price decimal
+  store_limit integer
+  user_limit integer
+  features text
+}
+
+Table SubscriptionPayment {
+  id bigserial [pk]
+  company_id bigint [ref: > Company.id]
+  plan_id bigint [ref: > SubscriptionPlan.id]
+  start_date timestamp
+  end_date timestamp
+  amount decimal
+  payment_status varchar
+  payment_reference varchar
+}
